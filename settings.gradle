@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Sample"
+rootProject.name = "Spoon-Android-Extentions"
 include ':app'
 include ':ext'
