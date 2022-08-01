@@ -1,4 +1,4 @@
-# Spoon-Android-Extentions
+# Spoon-Android-Extensions
 
 [![](https://jitpack.io/v/spooncast/Spoon-Android-Extentions.svg)](https://jitpack.io/#spooncast/Spoon-Android-Extentions)
 
