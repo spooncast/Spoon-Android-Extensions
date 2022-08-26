@@ -18,6 +18,19 @@ inline fun <T> List<T>.replace(
     }
 }
 
+fun <T> List<T>.replace(
+    newItem: T,
+    index: Int,
+): List<T> {
+    if (index < 0 || index > this.lastIndex) {
+        return this
+    }
+
+    return this.toMutableList().apply {
+        this[index] = newItem
+    }
+}
+
 inline fun <T> Collection<T>.has(predicate: (T) -> Boolean): Boolean {
     return firstOrNull(predicate) != null
 }
