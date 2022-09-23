@@ -8,9 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 fun Context.hasPermission(vararg permission: String): Boolean {
-    return permission.firstOrNull { perm ->
-        ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED
-    } == null
+    return permission.all { perm ->
+        ContextCompat.checkSelfPermission(this, perm) == PackageManager.PERMISSION_GRANTED
+    }
 }
 
 fun Fragment.hasPermission(vararg permission: String): Boolean {
@@ -18,13 +18,11 @@ fun Fragment.hasPermission(vararg permission: String): Boolean {
 }
 
 fun Activity.shouldShowRequestPermissionRationale(vararg permission: String): Boolean {
-    return permission.firstOrNull { perm ->
+    return permission.all { perm ->
         ActivityCompat.shouldShowRequestPermissionRationale(this, perm)
-    } != null
+    }
 }
 
 fun Fragment.shouldShowRequestPermissionRationale(vararg permission: String): Boolean {
-    return permission.firstOrNull { perm ->
-        ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), perm)
-    } != null
+    return requireActivity().shouldShowRequestPermissionRationale(*permission)
 }
