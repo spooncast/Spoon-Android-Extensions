@@ -34,6 +34,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.2.0'
     }
+    namespace 'net.spooncast.ext'
 }
 
 dependencies {
