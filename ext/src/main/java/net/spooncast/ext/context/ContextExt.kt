@@ -6,10 +6,15 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.app.ShareCompat
+import java.util.Locale
+import java.util.TimeZone
+import net.spooncast.ext.context.country.getCountryCodeByTimeZone
 
 
 fun Context?.toast(
@@ -60,4 +65,17 @@ fun Context.isDarkTheme(): Boolean {
 
 fun Context.isRTL(): Boolean {
     return resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+}
+
+/**
+ * @return 2 letter country code (lowercase)
+ */
+fun Context.getCountryCode(): String {
+    val localeBasedCode = Locale.getDefault().country
+    val defaultCountryCode = getCountryCodeByTimeZone(TimeZone.getDefault().id) ?: localeBasedCode
+    val telMgr = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager? ?: return defaultCountryCode
+    return when (telMgr.simState) {
+        TelephonyManager.SIM_STATE_READY -> telMgr.networkCountryIso.ifBlank { defaultCountryCode }
+        else -> defaultCountryCode
+    }.lowercase()
 }

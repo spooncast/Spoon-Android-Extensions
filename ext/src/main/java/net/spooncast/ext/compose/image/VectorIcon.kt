@@ -18,14 +18,16 @@ fun VectorIcon(
     size: Dp = 28.dp,
     tint: Color,
     contentDesc: String = "",
-    onClick: () -> Unit
+    onClick: (() -> Unit)? = null
 ) {
     Icon(
         imageVector = ImageVector.vectorResource(id = resId),
         contentDescription = contentDesc,
         modifier = Modifier
             .size(size)
-            .clickable(onClick = onClick),
+            .clickable(enabled = onClick != null) {
+                onClick?.invoke()
+            },
         tint = tint
     )
 }
