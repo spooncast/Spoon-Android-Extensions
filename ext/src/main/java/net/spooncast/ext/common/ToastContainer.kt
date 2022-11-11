@@ -1,6 +1,8 @@
 package net.spooncast.ext.common
 
+import android.content.Context
 import androidx.annotation.StringRes
+import net.spooncast.ext.context.toast
 
 sealed interface ToastContainer {
 
@@ -32,6 +34,14 @@ sealed interface ToastContainer {
             var result = res
             result = 31 * result + args.contentHashCode()
             return result
+        }
+    }
+
+    fun show(context: Context) {
+        when (this) {
+            is Resource -> context.toast(res)
+            is ResourceWithArgs -> context.toast(context.getString(res, *args))
+            is Text -> context.toast(text)
         }
     }
 }
