@@ -4,20 +4,20 @@ import android.content.Context
 import androidx.annotation.StringRes
 import net.spooncast.ext.context.toast
 
-sealed interface ToastContainer {
+sealed interface TextWrapper {
 
     data class Text(
         val text: String
-    ): ToastContainer
+    ): TextWrapper
 
     data class Resource(
         @StringRes val res: Int
-    ): ToastContainer
+    ): TextWrapper
 
     data class ResourceWithArgs(
         @StringRes val res: Int,
         val args: Array<Any>
-    ): ToastContainer {
+    ): TextWrapper {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
@@ -37,7 +37,7 @@ sealed interface ToastContainer {
         }
     }
 
-    fun show(context: Context) {
+    fun showToast(context: Context) {
         when (this) {
             is Resource -> context.toast(res)
             is ResourceWithArgs -> context.toast(context.getString(res, *args))
