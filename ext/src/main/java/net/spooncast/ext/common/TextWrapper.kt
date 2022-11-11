@@ -2,6 +2,8 @@ package net.spooncast.ext.common
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import net.spooncast.ext.context.toast
 
 sealed interface TextWrapper {
@@ -42,6 +44,23 @@ sealed interface TextWrapper {
             is Resource -> context.toast(res)
             is ResourceWithArgs -> context.toast(context.getString(res, *args))
             is Text -> context.toast(text)
+        }
+    }
+
+    fun text(context: Context): String {
+        return when (this) {
+            is Resource -> context.getString(res)
+            is ResourceWithArgs -> context.getString(res, *args)
+            is Text -> text
+        }
+    }
+
+    @Composable
+    fun text(): String {
+        return when (this) {
+            is Resource -> stringResource(res)
+            is ResourceWithArgs -> stringResource(res, *args)
+            is Text -> text
         }
     }
 }
