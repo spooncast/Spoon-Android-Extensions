@@ -3,12 +3,13 @@ package net.spooncast.ext.context
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.telephony.TelephonyManager
-import android.util.Log
 import android.view.View
+import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.app.ShareCompat
@@ -78,4 +79,9 @@ fun Context.getCountryCode(): String {
         TelephonyManager.SIM_STATE_READY -> telMgr.networkCountryIso.ifBlank { defaultCountryCode }
         else -> defaultCountryCode
     }.lowercase()
+}
+
+fun Context?.startWebBrowser(url: String) {
+    val urlText = if (URLUtil.isNetworkUrl(url)) url else "https://$url"
+    this?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlText)))
 }
