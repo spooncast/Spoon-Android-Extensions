@@ -48,4 +48,40 @@ class StringValidateExtKtTest {
             assertFalse(ipAddress.isValidIpAddress())
         }
     }
+
+    @DisplayName("isValidWebsocketUrl Test")
+    @Nested
+    inner class IsValidWebsocketUrlTest {
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "ws://example.com",
+                "wss://kr-ex.example.com",
+                "wss://example.com/123456789",
+                "wss://example.com:1234",
+                "ws://subdomain.example.com",
+                "wss://subdomain.example.com",
+                "ws://subdomain.example.com:1234",
+                "wss://subdomain.example.com:1234"
+            ]
+        )
+        fun `test valid websocket urls`(url: String) {
+            assertTrue(url.isValidWebsocketUrl(), "failed validation: $url")
+        }
+
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "http://example.com",
+                "ws://example.com:",
+                "ws://-example.com:",
+                "wss://example.com:",
+                "ws://example.com:123456789",
+                "ws://example."
+            ]
+        )
+        fun `test invalid websocket urls`(url: String) {
+            assertFalse(url.isValidWebsocketUrl(), "failed validation: $url")
+        }
+    }
 }
