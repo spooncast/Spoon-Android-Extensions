@@ -34,3 +34,5 @@ fun <T> List<T>.replace(
 inline fun <T> Collection<T>.has(predicate: (T) -> Boolean): Boolean {
     return firstOrNull(predicate) != null
 }
+
+fun List<String>.containsIgnoreCase(element: String): Boolean = this.any { it.equals(element, true) }
