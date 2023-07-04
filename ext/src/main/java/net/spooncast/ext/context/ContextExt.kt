@@ -1,5 +1,6 @@
 package net.spooncast.ext.context
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -81,7 +82,36 @@ fun Context.getCountryCode(): String {
     }.lowercase()
 }
 
-fun Context?.startWebBrowser(url: String) {
+fun Context.goLink(url: String) {
     val urlText = if (URLUtil.isNetworkUrl(url)) url else "https://$url"
-    this?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlText)))
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlText)))
 }
+
+fun Context.goPlayStore(packageName: String) {
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+    } catch (t: android.content.ActivityNotFoundException) {
+        goLink("https://play.google.com/store/apps/details?id=$packageName")
+    }
+}
+
+fun Context.goEmailApp(
+    emailAddress: String,
+    subject: String,
+    body: String
+) {
+    try {
+        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:$emailAddress?subject=$subject&body=${body}")
+        }
+        startActivity(emailIntent)
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+    }
+}
+
+val Context.currentLanguageCode: String
+    get() = resources.configuration.locales.get(0).language
+
+val Context.isArabicResource: Boolean
+    get() = currentLanguageCode == "ar"
