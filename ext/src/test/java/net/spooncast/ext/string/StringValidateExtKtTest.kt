@@ -14,8 +14,7 @@ class StringValidateExtKtTest {
         @ParameterizedTest(name = """
             [GIVEN : IP Address 유효성 확인]
             [WHEN : IP Address : {0}]
-            [THEN : 유효한 IP Address]
-        """)
+            [THEN : 유효한 IP Address]""")
         @ValueSource(
             strings = [
                 "192.168.1.1",
@@ -26,14 +25,13 @@ class StringValidateExtKtTest {
             ]
         )
         fun validTest(ipAddress: String) {
-            assertTrue(ipAddress.isValidIpAddress())
+            assertTrue(ipAddress.isValidFormat(ipAddressRegex))
         }
 
         @ParameterizedTest(name = """
             [GIVEN : IP Address 유효성 확인]
             [WHEN : IP Address : {0}]
-            [THEN : 유효하지 않은 IP Address]
-        """)
+            [THEN : 유효하지 않은 IP Address]""")
         @ValueSource(
             strings = [
                 "256.168.1.1",
@@ -45,7 +43,7 @@ class StringValidateExtKtTest {
             ]
         )
         fun inValidTest(ipAddress: String) {
-            assertFalse(ipAddress.isValidIpAddress())
+            assertFalse(ipAddress.isValidFormat(ipAddressRegex))
         }
     }
 
@@ -66,7 +64,7 @@ class StringValidateExtKtTest {
             ]
         )
         fun `test valid websocket urls`(url: String) {
-            assertTrue(url.isValidWebsocketUrl(), "failed validation: $url")
+            assertTrue(url.isValidFormat(webSocketUrlRegex), "failed validation: $url")
         }
 
         @ParameterizedTest
@@ -81,7 +79,7 @@ class StringValidateExtKtTest {
             ]
         )
         fun `test invalid websocket urls`(url: String) {
-            assertFalse(url.isValidWebsocketUrl(), "failed validation: $url")
+            assertFalse(url.isValidFormat(webSocketUrlRegex), "failed validation: $url")
         }
     }
 }

@@ -81,7 +81,21 @@ fun Context.getCountryCode(): String {
     }.lowercase()
 }
 
-fun Context?.startWebBrowser(url: String) {
+fun Context.goLink(url: String) {
     val urlText = if (URLUtil.isNetworkUrl(url)) url else "https://$url"
-    this?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlText)))
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlText)))
 }
+
+fun Context.goPlayStore(packageName: String) {
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+    } catch (t: android.content.ActivityNotFoundException) {
+        goLink("https://play.google.com/store/apps/details?id=$packageName")
+    }
+}
+
+val Context.currentLanguageCode: String
+    get() = resources.configuration.locales.get(0).language
+
+val Context.isArabicResource: Boolean
+    get() = currentLanguageCode == "ar"
