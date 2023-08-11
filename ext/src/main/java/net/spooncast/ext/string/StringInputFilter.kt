@@ -4,7 +4,7 @@ import android.text.InputFilter
 import android.text.Spanned
 
 class StringInputFilter(
-    val regex: Regex
+    private val regex: Regex
 ): InputFilter {
     override fun filter(
         source: CharSequence,
