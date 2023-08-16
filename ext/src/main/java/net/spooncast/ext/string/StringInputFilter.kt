@@ -14,10 +14,13 @@ class StringInputFilter(
         dstart: Int,
         dend: Int
     ): CharSequence {
-        return if (source.matches(regex)) {
-            source
-        } else {
-            ""
+        val filteredString = StringBuilder()
+        for (i in start until end) {
+            val char = source.getOrNull(i) ?: return ""
+            if (char.toString().matches(regex)) {
+                filteredString.append(char)
+            }
         }
+        return filteredString
     }
 }
