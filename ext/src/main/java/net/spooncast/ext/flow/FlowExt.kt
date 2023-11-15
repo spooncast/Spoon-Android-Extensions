@@ -4,14 +4,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 fun <T> Flow<T>.throttleFirst(
-    timeoutMillis: Long,
-    currentTimeMillis: Long = System.currentTimeMillis()
+    timeoutMillis: Long
 ) = flow {
-    var lastEmitTimeMillis = 0L
-    collect {
-        if (currentTimeMillis - lastEmitTimeMillis > timeoutMillis) {
-            lastEmitTimeMillis = currentTimeMillis
-            emit(it)
+    var emitTime = 0L
+    collect { upStream ->
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - emitTime > timeoutMillis) {
+            emitTime = currentTime
+            emit(upStream)
         }
     }
 }
