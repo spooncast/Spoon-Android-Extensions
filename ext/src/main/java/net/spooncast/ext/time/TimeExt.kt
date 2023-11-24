@@ -57,7 +57,7 @@ fun getDurationTimeFormat(
  * targetTime과의 시간 차이를 반환하는 함수
  *
  * @param targetTime 비교하고자 하는 시간, default는 현재 시간
- * @param timeUnit 반환할 시간 차이의 포맷으로 MS 단위, 초단위, 하루 단위 시간 차이를 반환
+ * @param timeUnit 반환할 시간 차이의 포맷으로 MS 단위, 초 단위, 분 단위, 하루 단위 시간 차이를 반환
  */
 fun Long.getDiffTime(
     targetTime: Long = System.currentTimeMillis(),
@@ -66,6 +66,7 @@ fun Long.getDiffTime(
     val diff = targetTime - this
     return when (timeUnit) {
         TimeUnit.SECONDS -> diff / 1_000L
+        TimeUnit.MINUTES -> diff / MINUTE_1
         TimeUnit.DAYS -> diff / DAY_1
         else -> diff
     }
