@@ -18,7 +18,7 @@ class FixedStack<T>(
 
     init {
         if (initialValues.isNotEmpty()) {
-            data.addAll(initialValues.take(maxSize))
+            data.addAll(initialValues.take(maxSize).reversed())
         }
     }
 

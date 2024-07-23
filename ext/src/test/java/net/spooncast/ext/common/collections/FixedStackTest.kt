@@ -6,6 +6,15 @@ import org.junit.jupiter.api.Test
 class FixedStackTest {
 
     @Test
+    fun constructTest() {
+        val stack = FixedStack(3, initialValues = listOf(1, 2, 3))
+
+        assertEquals(3, stack[0])
+        assertEquals(2, stack[1])
+        assertEquals(1, stack[2])
+    }
+
+    @Test
     fun `addAndGetTest - no shift`() {
         val stack = FixedStack<Int>(3)
 
