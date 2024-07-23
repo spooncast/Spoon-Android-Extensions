@@ -35,6 +35,9 @@ android {
         kotlinCompilerExtensionVersion '1.4.3'
     }
     namespace 'net.spooncast.ext'
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
