@@ -47,5 +47,5 @@ class FixedStack<T>(
     operator fun get(index: Int = 0): T? = data[index]
 
     @Synchronized
-    fun take(size: Int): List<T> = data.take(size)
+    fun getAll(): List<T> = data.toList()
 }

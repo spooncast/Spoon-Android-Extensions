@@ -55,11 +55,9 @@ class FixedStackTest {
     }
 
     @Test
-    fun takeTest() {
+    fun getAllTest() {
         val stack = FixedStack(3, initialValues = listOf(1, 2, 3))
 
-        assertEquals(listOf(3), stack.take(1))
-        assertEquals(listOf(3, 2), stack.take(2))
-        assertEquals(listOf(3, 2, 1), stack.take(3))
+        assertEquals(listOf(3, 2, 1), stack.getAll())
     }
 }
