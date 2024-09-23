@@ -2,7 +2,6 @@ package net.spooncast.ext.graphics
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.webkit.URLUtil
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -41,7 +40,10 @@ private fun Bitmap.scaledBitmap(maxResolution: Float?): Bitmap {
 
 const val RESOLUTION_FHD = 1920F
 
-fun loadBitmapByUrl(url: String?): Bitmap? {
+fun loadBitmapByUrl(
+    url: String?,
+    bitmapOption: BitmapFactory.Options? = null
+): Bitmap? {
     if (!URLUtil.isNetworkUrl(url)) {
         return null
     }
@@ -52,7 +54,7 @@ fun loadBitmapByUrl(url: String?): Bitmap? {
         .getInputStream()
 
     try {
-        return BitmapFactory.decodeStream(inputStream) ?: return null
+        return BitmapFactory.decodeStream(inputStream, null, bitmapOption) ?: return null
     } catch (t: Throwable) {
         return null
     }
