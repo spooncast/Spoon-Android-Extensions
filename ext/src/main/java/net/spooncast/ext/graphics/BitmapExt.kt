@@ -1,9 +1,13 @@
 package net.spooncast.ext.graphics
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.webkit.URLUtil
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.net.URL
 
 fun Bitmap.toInputStream(
     format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
@@ -36,3 +40,20 @@ private fun Bitmap.scaledBitmap(maxResolution: Float?): Bitmap {
 }
 
 const val RESOLUTION_FHD = 1920F
+
+fun loadBitmapByUrl(url: String?): Bitmap? {
+    if (!URLUtil.isNetworkUrl(url)) {
+        return null
+    }
+
+    val inputStream = URL(url)
+        .openConnection()
+        .apply { connectTimeout = 10_000 }
+        .getInputStream()
+
+    try {
+        return BitmapFactory.decodeStream(inputStream) ?: return null
+    } catch (t: Throwable) {
+        return null
+    }
+}
