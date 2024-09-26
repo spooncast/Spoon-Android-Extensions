@@ -48,12 +48,11 @@ fun loadBitmapByUrl(
         return null
     }
 
-    val inputStream = URL(url)
-        .openConnection()
-        .apply { connectTimeout = 10_000 }
-        .getInputStream()
-
     try {
+        val inputStream = URL(url)
+            .openConnection()
+            .apply { connectTimeout = 10_000 }
+            .getInputStream()
         return BitmapFactory.decodeStream(inputStream, null, bitmapOption) ?: return null
     } catch (t: Throwable) {
         return null
