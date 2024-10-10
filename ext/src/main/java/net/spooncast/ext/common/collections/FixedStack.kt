@@ -48,4 +48,9 @@ class FixedStack<T>(
 
     @Synchronized
     fun getAll(): List<T> = data.toList()
+
+    @Synchronized
+    fun clear() {
+        data.clear()
+    }
 }
