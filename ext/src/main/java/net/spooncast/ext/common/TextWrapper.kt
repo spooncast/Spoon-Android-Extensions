@@ -64,3 +64,7 @@ sealed interface TextWrapper {
         }
     }
 }
+
+fun textWrapperOf(text: String): TextWrapper = TextWrapper.Text(text)
+fun textWrapperOf(@StringRes res: Int): TextWrapper = TextWrapper.Resource(res)
+fun textWrapperOf(@StringRes res: Int, args: Array<Any>): TextWrapper = TextWrapper.ResourceWithArgs(res, args)
