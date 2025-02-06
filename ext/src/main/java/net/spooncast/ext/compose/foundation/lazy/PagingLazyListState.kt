@@ -18,7 +18,7 @@ fun rememberPagingLazyListState(
         derivedStateOf {
             val lastVisibleItemIdx = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: Int.MIN_VALUE
             val lastIndex = listState.layoutInfo.totalItemsCount - 1
-            lastVisibleItemIdx >= lastIndex - prefetchDistance
+            listState.canScrollBackward && lastVisibleItemIdx >= lastIndex - prefetchDistance
         }
     }
     LaunchedEffect(key1 = shouldLoadMore) {
